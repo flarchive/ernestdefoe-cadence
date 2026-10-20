@@ -1,0 +1,180 @@
+# Cadence
+
+**See a member's rhythm, not just their volume.**
+
+An activity map on every profile — and, if you want it, a compact trace beside
+every post and on user cards.
+
+[![Flarum](https://img.shields.io/badge/Flarum-2.0-orange)](https://flarum.org)
+[![Licence](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
+
+---
+
+![A member's activity map: a year of squares, darker where they did more, with All, Discussions and Replies above it](screenshots/day.png)
+
+Press any square and it tells you what happened that day: *2 things on
+September 7, 2026 — 1 discussion started · 1 reply*.
+
+On a phone the map scrolls sideways inside the profile card, and it opens on the
+newest weeks:
+
+<img src="screenshots/phone.png" alt="The map on a phone, opened on the most recent weeks" width="390">
+
+## Why not just copy GitHub's graph
+
+Because GitHub's has six problems, and on a forum they matter more than they do
+on a code host.
+
+- **It counts one undifferentiated thing.** Cadence separates discussions,
+  replies, likes, reactions and best answers, and only offers the kinds a member
+  actually has.
+- **Its scale is relative to each person's own busiest day**, so someone with
+  two posts all year and someone with two hundred produce similar-looking
+  graphs. Cadence uses an absolute scale with a legend that states real numbers,
+  so two profiles can be compared.
+- **It shows a fixed year.** Someone who joined last month gets eleven months of
+  grey, which reads as "inactive" when the truth is "new". Cadence starts at the
+  join date.
+- **Colour is the only encoding.** Cadence's levels differ in lightness as well
+  as hue, and every square carries its real numbers for screen readers.
+- **It's decoration.** Cadence's squares are buttons: press one and it tells you
+  what happened that day.
+- **It can't tell you when someone is around.** Cadence stores hourly, so a day
+  is the *reader's* day rather than the server's.
+
+## Where it shows
+
+| Placement | Default |
+| --- | --- |
+| The full map on member profiles | On |
+| A 26-week sparkline beside every post | Off |
+| A sparkline on user cards | Off |
+
+🚨 **The sparklines cost no extra requests.** They read an attribute that rides
+along on the user the page had already loaded. A placement that appears once per
+post cannot fetch its own data — thirty posts would be thirty requests, which is
+how a shared host runs out of database connections and returns 500 for the whole
+forum rather than for the decoration that caused it.
+
+## Daily streaks
+
+**A flame for every member who comes back tomorrow.**
+
+![The streaks leaderboard: your flame with its tier, rank and the road to the next tier; Current, All-time and Hall of Flames; the board's figures, the bonfire and the tiers](screenshots/streak-streaks.png)
+
+A streak counts the days in a row a member shows up — in *their* timezone, not
+the server's — and turns it into a flame: after their name in posts, on their
+card, in the header and on a leaderboard where the next rival is always within
+reach.
+
+- **You choose what keeps it alight:** contributing (posting, replying, liking
+  or reacting) or simply visiting.
+- **It starts with your history.** Other streak add-ons start every member at
+  zero; Cadence already holds your forum's activity, so the member who has
+  posted every day for two years gets a two-year flame on day one.
+![A flame after every author's name in a discussion](screenshots/streak-posts.png)
+
+![The header flame open: today's streak, the next tier and the month, with fed days filled in](screenshots/streak-header.png)
+
+- **Tiers you design** — days, colour, icon, glow — and seasonal flames for the
+  dates you pick. Members with a birthday in Calendar get a golden flame.
+- **A missed day is not the end.** Milestones earn freezes that melt on their
+  own to save a missed day, and a long flame that goes out leaves embers: post
+  within 48 hours to bring half of it back.
+- **The leaderboard:** Current, All-time and the Hall of Flames, your rank, the
+  member just ahead of you, and a community bonfire everyone feeds together.
+![A member's Streak tab: their flame, a year of fed days, the month and their journal](screenshots/streak-profile.png)
+
+- **Alerts members control:** milestones, new tiers and records as alerts and
+  a toast on the first page of the day, and an "at risk" email before a flame
+  goes out.
+- **Widgets** for Bespoke and fof/forum-widgets-core: My flame, Top flames,
+  the Bonfire.
+![The first reply of the seventh day: Milestone reached, You reached Kindled, New personal best](screenshots/streak-toast.png)
+
+- **Admin:** an overview of the whole board and a flame sheet for every member
+  — give freezes, set, revive or reset — with every change journaled.
+
+![Admin: key figures, flames by tier, the longest flames alight and recent events](screenshots/streak-admin-overview.png)
+
+![Admin: the tier editor with a live preview of each flame](screenshots/streak-admin-tiers.png)
+
+<img src="screenshots/streak-phone.png" alt="The leaderboard on a phone" width="390">
+
+🚨 **It costs your forum one query per page, however many flames are on it.**
+The flame rides along on users the page already loaded. The leaderboard, the
+profile tab and the header menu load their code only when opened.
+
+For the "at risk" and "embers" alerts, Flarum's scheduler must be running
+(`* * * * * php flarum schedule:run`). Without it, flames still go out on
+time — only those two alerts wait.
+
+Only activity the map's audience could see counts toward a streak, and in
+visit mode a member who hides their online status keeps their visit days to
+themselves.
+
+## Settings
+
+Admin → Cadence:
+
+![Cadence's settings: the map on profiles, a sparkline beside posts, and one on user cards](screenshots/settings.png)
+
+## Installation
+
+```bash
+composer require ernestdefoe/cadence
+php flarum cache:clear
+php flarum cadence:rebuild
+```
+
+That last command is worth running once (enabling the extension runs it too). Cadence maintains its counts from
+events as they happen, so on a forum with existing history it starts empty until
+you rebuild — and a map that tells every member they have never done anything is
+worse than no map.
+
+```bash
+php flarum cadence:rebuild
+```
+
+Rebuilds the posts and likes buckets from your forum's own tables. Safe to re-run.
+
+Only activity a guest could see is counted — or, on a forum guests cannot open,
+activity an ordinary member could see. Posts in staff-only tags, private
+discussions and direct messages never reach a map, because the map is one set of
+counts shown to everyone who can open the profile. Change who can see a tag and
+run this again, so activity already counted follows the new permissions.
+
+🚨 **Reactions and best answers cannot be rebuilt** — neither records *when* it
+happened, so those two accumulate from the day you install rather than
+backfilling. Posts and likes rebuild exactly.
+
+## Works alongside Calendar
+
+`ernestdefoe/calendar` has a profile heatmap of its own. When Cadence is
+installed and showing on profiles, Calendar stands its own one down, so nobody
+ends up with two. Turn Cadence's profile placement off and Calendar's comes back.
+
+## How it stays cheap
+
+Activity is rolled up into one row per member, per hour, per kind. A profile
+view is an indexed range scan over that member's own rows — it never aggregates
+over `posts`, which on a forum of any size is a table scan per profile visit.
+
+Hourly rather than daily is what lets the day boundary be decided when the map
+is *read*, in the reader's timezone, instead of being baked into the data
+forever at the server's.
+
+## Requirements
+
+- Flarum 2.0
+- PHP 8.3+
+
+## Support
+
+- **Support forum:** [Cadence on ernestdefoe.online](https://ernestdefoe.online/d/116)
+- **Flarum community:** [Cadence on discuss.flarum.org](https://discuss.flarum.org/d/39992-cadence)
+- **Bug reports:** [GitHub issues](https://github.com/ernestdefoe/cadence/issues)
+
+## Licence
+
+MIT.
