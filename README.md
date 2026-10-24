@@ -2,24 +2,13 @@
 
 > **Read-only archive of released versions of ernestdefoe/cadence.** Not for installation: use [Packagist](https://packagist.org/packages/ernestdefoe/cadence) or the [upstream repository](https://github.com/ernestdefoe/cadence).
 
-**11** versions archived · Latest: [`1.2.4`](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.2.4) · License: `MIT` · Flarum: `^2.0`
+**0** versions archived · Latest: [`1.3.0`](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.3.0) · License: `MIT` · Flarum: `^2.0`
 
 ## Archived Versions
 
 | Version | Released | Flarum | Source |
 |---|---|---|---|
-| `1.0.0` | 2026-09-24 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.0.0) |
-| `1.0.1` | 2026-10-03 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.0.1) |
-| `1.0.2` | 2026-10-05 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.0.2) |
-| `1.1.0` | 2026-10-05 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.1.0) |
-| `1.1.1` | 2026-10-05 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.1.1) |
-| `1.1.2` | 2026-10-08 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.1.2) |
-| `1.2.0` | 2026-10-20 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.2.0) |
-| `1.2.1` | 2026-10-20 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.2.1) |
-| `1.2.2` | 2026-10-21 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.2.2) |
-| `1.2.3` | 2026-10-22 | `^2.0` | [Browse](https://github.com/flarchive/ernestdefoe-cadence/tree/archive/v1.2.3) |
-
-[View all 11 versions](https://github.com/flarchive/ernestdefoe-cadence/tags)
+| — | — | — | — |
 
 Catalog entry: [packages/ernestdefoe-cadence.json](https://github.com/flarchive/archive-index/blob/main/packages/ernestdefoe-cadence.json)
 
